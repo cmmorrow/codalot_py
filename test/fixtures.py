@@ -19,7 +19,7 @@ class Testalot(object):
         raise NotImplementedError
 
 
-class TestalotFixture(Codalot, Testalot):
+class FixtureTestalot(Codalot, Testalot):
     """The Codalot test fixture."""
 
     knights = []

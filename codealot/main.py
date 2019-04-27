@@ -96,8 +96,12 @@ class Codalot(object):
     def process(self):
         """Apply the logic for modifying the properties of each Knight."""
         for knight in self.knights:
-            knight.increment_stamina(1 if knight.is_in_tavern else -1)
-            knight.increment_xp(1 if knight.is_in_training_yard else 0)
+            if knight.is_in_tavern:
+                knight.increment_stamina(1)
+            else:
+                knight.increment_stamina(-1)
+            if knight.is_in_training_yard and knight.stamina > 0:
+                knight.increment_xp(1)
 
     def grant_bonus_xp(self):
         """Apply the bonus XP logic for each Knight."""
