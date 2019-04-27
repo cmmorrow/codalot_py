@@ -36,13 +36,13 @@ class BasicCodalot(Codalot):
 
     def addKnightToTrainingYard(self, knight):
         self.knights.append(knight)
-        knight.setInTrainingYard(True)
-        knight.setInTavern(False)
+        knight.set_in_training_yard(True)
+        knight.set_in_tavern(False)
 
     def addKnightToTavern(self, knight):
         self.knights.append(knight)
-        knight.setInTavern(True)
-        knight.setInTrainingYard(False)
+        knight.set_in_tavern(True)
+        knight.set_in_training_yard(False)
 
     def grantBonusXp(self):
         bonusKnights = 0

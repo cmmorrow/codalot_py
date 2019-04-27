@@ -1,112 +1,102 @@
 from random import Random
 
+
 class Knight(object):
-    __isInTavern = False
-    __isInTrainingYard = False
+
+    __is_in_tavern = False
+    __is_in_training_yard = False
 
     def __init__(self):
-        self.__xp = 0
-        self.__stamina = 0
+        self.xp = 0
+        self.stamina = 0
 
-    def getXp(self):
-        return self.__xp
+    def increment_xp(self, xp):
+        self.xp += xp
 
-    def setXp(self, xp):
-        self.__xp = xp
+    def increment_stamina(self, stamina):
+        self.stamina += stamina
 
-    def incrementXp(self, xp):
-        self.__xp += xp
+    def is_in_tavern(self):
+        return self.__is_in_tavern
 
-    def getStamina(self):
-        return self.__stamina
+    def set_in_tavern(self, status):
+        self.__is_in_tavern = status
 
-    def setStamina(self, stamina):
-        self.__stamina = stamina
+    def is_in_training_yard(self):
+        return self.__is_in_training_yard
 
-    def incrementStamina(self, stamina):
-        self.__stamina += stamina
-
-    def isInTavern(self):
-        return self.__isInTavern
-
-    def setInTavern(self, isInTavern):
-        self.__isInTavern = isInTavern
-
-    def isInTrainingYard(self):
-        return self.__isInTrainingYard
-
-    def setInTrainingYard(self, isInTrainingYard):
-        self.__isInTrainingYard = isInTrainingYard
+    def set_in_training_yard(self, status):
+        self.__is_in_training_yard = status
 
 
 class Codalot(object):
+
     knights = []
 
     def __init__(self):
-        self.knights = list()
+        self.knights = []
 
-    def clearKnights(self):
+    def clear_knights(self):
         del self.knights[:]
 
-    def addKnightToTrainingYard(self, knight):
+    def add_knight_to_training_yard(self, knight):
         self.knights.append(knight)
-        knight.setInTrainingYard(True)
-        knight.setInTavern(False)
+        knight.set_in_training_yard(True)
+        knight.set_in_tavern(False)
 
-    def addKnightToTavern(self, knight):
+    def add_knight_to_tavern(self, knight):
         self.knights.append(knight)
-        knight.setInTavern(True)
-        knight.setInTrainingYard(False)
+        knight.set_in_tavern(True)
+        knight.set_in_training_yard(False)
 
     def process(self):
         for knight in self.knights:
-            knight.incrementStamina(1 if knight.isInTavern() else -1)
-            knight.incrementXp(1 if knight.isInTrainingYard() else 0)
+            knight.increment_stamina(1 if knight.is_in_tavern() else -1)
+            knight.increment_xp(1 if knight.is_in_training_yard() else 0)
 
-    def grantBonusXp(self):
-        bonusKnights = 0
+    def grant_bonus_xp(self):
+        bonus_knights = 0
         for knight in self.knights:
-            if knight.getXp() >= 3:
-                bonusKnights = bonusKnights + 1
+            if knight.xp >= 3:
+                bonus_knights = bonus_knights + 1
 
-        if bonusKnights == 3:
+        if bonus_knights == 3:
             for knight in self.knights:
-                if knight.getXp() >= 3:
-                    knight.setXp(knight.getXp() + 5)
+                if knight.xp >= 3:
+                    knight.xp += 5
 
-        if bonusKnights == 5:
+        if bonus_knights == 5:
             for knight in self.knights:
-                if knight.getXp() >= 3:
-                    knight.setXp(knight.getXp() + 10)
+                if knight.xp >= 3:
+                    knight.xp += 10
 
-        if bonusKnights == 6:
+        if bonus_knights == 6:
             for knight in self.knights:
-                if knight.getXp() >= 3:
-                    knight.setXp(knight.getXp() + 20)
+                if knight.xp >= 3:
+                    knight.xp += 20
+
 
 if __name__ == "__main__":
     codalot = Codalot()
 
-    knights = list()
+    knights = []
     for i in range(6):
         knights.append(Knight())
 
     random = Random(1)
-    for i in range(24):
-        codalot.clearKnights()
+    for _ in range(24):
+        codalot.clear_knights()
         for knight in knights:
-            randomVal = random.randint(0, 1)
-            if randomVal == 0:
-                codalot.addKnightToTrainingYard(knight)
-            elif randomVal == 1:
-                codalot.addKnightToTavern(knight)
+            random_val = random.randint(0, 1)
+            if random_val == 0:
+                codalot.add_knight_to_training_yard(knight)
+            elif random_val == 1:
+                codalot.add_knight_to_tavern(knight)
         codalot.process()
-    codalot.grantBonusXp()
+    codalot.grant_bonus_xp()
 
-    totalXp = 0
+    total_xp = 0
     for knight in knights:
-        totalXp = totalXp + knight.getXp()
+        total_xp += knight.xp
 
-    print "Total XP earned by all " + str(len(knights)) + " knights: " + str(totalXp)
-
-
+    print "Total XP earned by all " + str(len(knights)) + " knights: " + str(total_xp)
