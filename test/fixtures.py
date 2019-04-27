@@ -1,6 +1,6 @@
 """This module hosts the Codalot test fixture."""
 
-from codealot.main import Codalot, Knight
+from codealot.main import Codalot, Knight, NUM_OF_KNIGHTS
 from test.KnightLocation import KnightLocation
 
 
@@ -27,7 +27,7 @@ class TestalotFixture(Codalot, Testalot):
     def __init__(self):
         """Initialize a new fixture object."""
         super(Codalot, self).__init__()
-        for i in range(6):
+        for _ in range(NUM_OF_KNIGHTS):
             self.knights.append(Knight())
 
     def set_knight(self, idx, location):

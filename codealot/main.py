@@ -3,6 +3,9 @@
 from random import Random
 
 
+NUM_OF_KNIGHTS = 12
+
+
 class Knight(object):
     """This class represents a Codalot Knight."""
 
@@ -125,11 +128,11 @@ if __name__ == "__main__":
 
     # Create 6 new Knight objects to add to codalot.
     knights = []
-    for i in range(6):
+    for i in range(NUM_OF_KNIGHTS):
         knights.append(Knight())
 
     # Start the main event loop over 24 hours.
-    random = Random(1)
+    random = Random()
     for _ in range(24):
         codalot.clear_knights()
         for knight in knights:
