@@ -101,7 +101,7 @@ class Codalot(object):
         bonus_knights = 0
         for knight in self.knights:
             if knight.xp >= 3:
-                bonus_knights = bonus_knights + 1
+                bonus_knights += 1
 
         if bonus_knights == 3:
             for knight in self.knights:
