@@ -99,4 +99,4 @@ if __name__ == "__main__":
     for knight in knights:
         total_xp += knight.xp
 
-    print "Total XP earned by all " + str(len(knights)) + " knights: " + str(total_xp)
+print("Total XP earned by all " + str(len(knights)) + " knights: " + str(total_xp))
