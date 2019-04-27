@@ -1,8 +1,11 @@
+"""This module hosts the Codalot test fixture."""
+
 from test.Codalot import Codalot
 from test.KnightPosition import KnightPosition
 
 
 class BasicCodalot(Codalot):
+    """The Codalot test fixture."""
 
     knights = []
 
@@ -11,7 +14,7 @@ class BasicCodalot(Codalot):
         for i in range(6):
             self.knights.append(Knight())
 
-    def setKnight(self, index, position):
+    def set_knight(self, index, position):
         knight = self.knights[index]
         knight.setInTavern(False)
         knight.setInTrainingYard(False)
@@ -25,7 +28,7 @@ class BasicCodalot(Codalot):
             knight.incrementStamina(1 if knight.isInTavern() else -1)
             knight.incrementXp(1 if knight.isInTrainingYard() else 0)
 
-    def calculateEarnedXp(self):
+    def calculate_earned_xp(self):
         total = 0
         for knight in self.knights:
             total += knight.getXp()
