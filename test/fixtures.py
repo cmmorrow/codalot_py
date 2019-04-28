@@ -1,6 +1,6 @@
 """This module hosts the Codalot test fixture."""
 
-from codealot.main import Codalot, Knight, NUM_OF_KNIGHTS
+from codealot.main import Codalot, Knight
 from test.KnightLocation import KnightLocation
 
 
@@ -26,8 +26,8 @@ class FixtureTestalot(Codalot, Testalot):
 
     def __init__(self):
         """Initialize a new fixture object."""
-        super(Codalot, self).__init__()
-        for _ in range(NUM_OF_KNIGHTS):
+        super(FixtureTestalot, self).__init__()
+        for _ in range(self.num_of_knights):
             self.knights.append(Knight())
 
     def set_knight(self, idx, location):
@@ -39,8 +39,10 @@ class FixtureTestalot(Codalot, Testalot):
         knight = self.knights[idx]
         if location == KnightLocation.TAVERN:
             knight.set_in_tavern(True)
+            knight.set_in_training_yard(False)
         elif location == KnightLocation.TRAINING_YARD:
             knight.set_in_training_yard(True)
+            knight.set_in_tavern(False)
 
     def calculate_earned_xp(self):
         """Add up the XP of all Knights.

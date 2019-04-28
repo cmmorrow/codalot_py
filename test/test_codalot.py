@@ -21,11 +21,46 @@ def test_process():
     codalot.set_knight(10, KnightLocation.TRAINING_YARD)
     codalot.set_knight(11, KnightLocation.TRAINING_YARD)
     codalot.process()
+    codalot.process()
 
     assert codalot.calculate_earned_xp() == 0
 
-    codalot.knights[0].set_in_training_yard(True)
-    codalot.knights[7].set_in_training_yard(True)
+    codalot.set_knight(0, KnightLocation.TRAINING_YARD)
+    codalot.set_knight(6, KnightLocation.TRAINING_YARD)
+    codalot.set_knight(7, KnightLocation.TRAINING_YARD)
     codalot.process()
 
-    assert codalot.calculate_earned_xp() == 2
+    assert codalot.calculate_earned_xp() == 3
+    assert codalot.knights[3].stamina < 0
+    assert codalot.knights[3].xp_lock
+
+
+def test_bonus_xp():
+    """Test the bonus XP logic."""
+    codalot = FixtureTestalot()
+
+    # Set the even index Knights in the tavern and the odd index Knights in the training yard.
+    for i in range(codalot.num_of_knights):
+        if i % 2 == 0:
+            codalot.set_knight(i, KnightLocation.TAVERN)
+        else:
+            codalot.set_knight(i, KnightLocation.TRAINING_YARD)
+
+    # Process to increment stamina.
+    for _ in range(4):
+        codalot.process()
+
+    # Switch Knights from the training yard to the tavern and vice versa.
+    for i in range(codalot.num_of_knights):
+        if i % 2 == 0:
+            codalot.set_knight(i, KnightLocation.TRAINING_YARD)
+        else:
+            codalot.set_knight(i, KnightLocation.TAVERN)
+
+    # Process again to generate XP.
+    for _ in range(4):
+        codalot.process()
+
+    # Apply the XP bonuses.
+    codalot.grant_bonus_xp()
+    assert codalot.calculate_earned_xp() == 138

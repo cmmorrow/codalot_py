@@ -3,9 +3,6 @@
 from random import Random
 
 
-NUM_OF_KNIGHTS = 12
-
-
 class Knight(object):
     """This class represents a Codalot Knight."""
 
@@ -16,6 +13,7 @@ class Knight(object):
         """Initialize a new Knight object with 0 xp and stamina."""
         self.xp = 0
         self.stamina = 0
+        self.xp_lock = False
 
     def increment_xp(self, xp):
         """Increase the Knight's xp by the given value.
@@ -70,6 +68,7 @@ class Codalot(object):
     def __init__(self):
         """Initialize the empty list of knights."""
         self.knights = []
+        self.num_of_knights = 12
 
     def clear_knights(self):
         """Reset the list of knights."""
@@ -100,29 +99,32 @@ class Codalot(object):
                 knight.increment_stamina(1)
             else:
                 knight.increment_stamina(-1)
+
             if knight.is_in_training_yard and knight.stamina > 0:
                 knight.increment_xp(1)
+            elif knight.stamina < 0:
+                knight.xp_lock = True
 
     def grant_bonus_xp(self):
         """Apply the bonus XP logic for each Knight."""
         bonus_knights = 0
         for knight in self.knights:
-            if knight.xp >= 3:
+            if knight.xp >= 3 and not knight.xp_lock:
                 bonus_knights += 1
 
         if bonus_knights == 3:
             for knight in self.knights:
-                if knight.xp >= 3:
+                if knight.xp >= 3 and not knight.xp_lock:
                     knight.xp += 5
 
         if bonus_knights == 5:
             for knight in self.knights:
-                if knight.xp >= 3:
+                if knight.xp >= 3 and not knight.xp_lock:
                     knight.xp += 10
 
         if bonus_knights == 6:
             for knight in self.knights:
-                if knight.xp >= 3:
+                if knight.xp >= 3 and not knight.xp_lock:
                     knight.xp += 20
 
 
@@ -132,7 +134,7 @@ if __name__ == "__main__":
 
     # Create 6 new Knight objects to add to codalot.
     knights = []
-    for i in range(NUM_OF_KNIGHTS):
+    for i in range(codalot.num_of_knights):
         knights.append(Knight())
 
     # Start the main event loop over 24 hours.
