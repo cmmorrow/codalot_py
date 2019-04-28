@@ -34,7 +34,6 @@ def test_process():
 
     assert codalot.calculate_earned_xp() == 3
     assert codalot.knights[3].stamina < 0
-    assert codalot.knights[3].xp_lock
 
 
 def test_bonus_xp():
@@ -74,19 +73,19 @@ def test_run_five_days():
     random = Random(1)
 
     def run():
-        for i in range(codalot.days_to_run * 24):
-            if i % 24 == 0:
-                for knight in codalot.knights:
-                    knight.xp_lock = False
-            for k in range(len(codalot.knights)):
-                random_val = random.randint(0, 1)
-                if random_val == 0:
-                    codalot.set_knight(k, KnightLocation.TRAINING_YARD)
-                elif random_val == 1:
-                    codalot.set_knight(k, KnightLocation.TAVERN)
-            codalot.process()
+        for _ in range(codalot.days_to_run):
+            for i in range(codalot.days_to_run * 24):
+                for k in range(len(codalot.knights)):
+                    random_val = random.randint(0, 2)
+                    if random_val == 0:
+                        codalot.set_knight(k, KnightLocation.TRAINING_YARD)
+                    elif random_val == 1:
+                        codalot.set_knight(k, KnightLocation.TAVERN)
+                    elif random_val == 2:
+                        codalot.set_knight(k, KnightLocation.ROUND_TABLE)
+                codalot.process()
     run()
-    assert codalot.calculate_earned_xp() == 8
-    codalot.days_to_run = 5
+    assert codalot.calculate_earned_xp() == 3
+    codalot.days_to_run = 7
     run()
-    assert codalot.calculate_earned_xp() == 277
+    assert codalot.calculate_earned_xp() == 3

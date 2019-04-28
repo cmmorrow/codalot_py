@@ -8,3 +8,4 @@ class KnightLocation(Enum):
 
     TAVERN = 1
     TRAINING_YARD = 2
+    ROUND_TABLE = 3

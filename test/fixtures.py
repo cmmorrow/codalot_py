@@ -38,8 +38,14 @@ class FixtureTestalot(Codalot, Testalot):
         if location == KnightLocation.TAVERN:
             knight.set_in_tavern(True)
             knight.set_in_training_yard(False)
+            knight.set_at_round_table(False)
         elif location == KnightLocation.TRAINING_YARD:
             knight.set_in_training_yard(True)
+            knight.set_in_tavern(False)
+            knight.set_at_round_table(False)
+        elif location == KnightLocation.ROUND_TABLE:
+            knight.set_at_round_table(True)
+            knight.set_in_training_yard(False)
             knight.set_in_tavern(False)
 
     def calculate_earned_xp(self):
@@ -49,5 +55,5 @@ class FixtureTestalot(Codalot, Testalot):
         """
         total = 0
         for knight in self.knights:
-            total += 0 if knight.xp_lock else knight.xp
+            total += knight.xp
         return total
