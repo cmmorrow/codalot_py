@@ -22,8 +22,6 @@ class Testalot(object):
 class FixtureTestalot(Codalot, Testalot):
     """The Codalot test fixture."""
 
-    knights = []
-
     def __init__(self):
         """Initialize a new fixture object."""
         super(FixtureTestalot, self).__init__()
@@ -51,5 +49,5 @@ class FixtureTestalot(Codalot, Testalot):
         """
         total = 0
         for knight in self.knights:
-            total += knight.xp
+            total += 0 if knight.xp_lock else knight.xp
         return total

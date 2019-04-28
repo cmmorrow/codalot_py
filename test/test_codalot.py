@@ -1,5 +1,7 @@
 """This module hosts tests for Codealot."""
 
+from random import Random
+
 from test.fixtures import FixtureTestalot
 from test.KnightLocation import KnightLocation
 
@@ -64,3 +66,27 @@ def test_bonus_xp():
     # Apply the XP bonuses.
     codalot.grant_bonus_xp()
     assert codalot.calculate_earned_xp() == 138
+
+
+def test_run_five_days():
+    """Test the case where Codalot runs for 5 days."""
+    codalot = FixtureTestalot()
+    random = Random(1)
+
+    def run():
+        for i in range(codalot.days_to_run * 24):
+            if i % 24 == 0:
+                for knight in codalot.knights:
+                    knight.xp_lock = False
+            for k in range(len(codalot.knights)):
+                random_val = random.randint(0, 1)
+                if random_val == 0:
+                    codalot.set_knight(k, KnightLocation.TRAINING_YARD)
+                elif random_val == 1:
+                    codalot.set_knight(k, KnightLocation.TAVERN)
+            codalot.process()
+    run()
+    assert codalot.calculate_earned_xp() == 8
+    codalot.days_to_run = 5
+    run()
+    assert codalot.calculate_earned_xp() == 277

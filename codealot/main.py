@@ -63,12 +63,12 @@ class Knight(object):
 class Codalot(object):
     """This class implements the control logic for the Knights."""
 
-    knights = []
+    num_of_knights = 12
+    days_to_run = 1
 
     def __init__(self):
         """Initialize the empty list of knights."""
         self.knights = []
-        self.num_of_knights = 12
 
     def clear_knights(self):
         """Reset the list of knights."""
@@ -137,11 +137,13 @@ if __name__ == "__main__":
     for i in range(codalot.num_of_knights):
         knights.append(Knight())
 
-    # Start the main event loop over 24 hours.
+    # Start the main event loop.
     random = Random()
-    for _ in range(24):
+    for i in range(codalot.days_to_run * 24):
         codalot.clear_knights()
         for knight in knights:
+            if i % 24 == 0:
+                knight.xp_lock = False
             random_val = random.randint(0, 1)
             if random_val == 0:
                 codalot.add_knight_to_training_yard(knight=knight)
@@ -153,6 +155,6 @@ if __name__ == "__main__":
     # Apply bonus XP at the end of the day.
     total_xp = 0
     for knight in knights:
-        total_xp += knight.xp
+        total_xp += 0 if knight.xp_lock else knight.xp
 
     print("Total XP earned by all " + str(len(knights)) + " knights: " + str(total_xp))
