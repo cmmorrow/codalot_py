@@ -110,17 +110,17 @@ class Codalot(object):
             if knight.xp >= 3:
                 bonus_knights += 1
 
-        if bonus_knights == 3:
+        if bonus_knights == 6:
             for knight in self.knights:
                 if knight.xp >= 3:
                     knight.xp += 5
 
-        if bonus_knights == 5:
+        elif bonus_knights == 10:
             for knight in self.knights:
                 if knight.xp >= 3:
                     knight.xp += 10
 
-        if bonus_knights == 6:
+        elif bonus_knights == 12:
             for knight in self.knights:
                 if knight.xp >= 3:
                     knight.xp += 20
